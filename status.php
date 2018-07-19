@@ -1,121 +1,64 @@
 <html>
 <head>
-  <title>Status</title>
-</head>
-<body align="center">
+  <title>Irrigation for Tomorrow</title>
+  <link href="https://fonts.googleapis.com/css?family=Arvo" rel="stylesheet">
   <style>
-  .onoffswitch {
-    position: relative; width: 90px;
-    -webkit-user-select:none; -moz-user-select:none; -ms-user-select: none;
-}
-.onoffswitch-checkbox {
-    display: none;
-}
-.onoffswitch-label {
-    display: block; overflow: hidden; cursor: pointer;
-    border: 2px solid #999999; border-radius: 20px;
-}
-.onoffswitch-inner {
-    display: block; width: 200%; margin-left: -100%;
-    transition: margin 0.3s ease-in 0s;
-}
-.onoffswitch-inner:before, .onoffswitch-inner:after {
-    display: block; float: left; width: 50%; height: 30px; padding: 0; line-height: 30px;
-    font-size: 14px; color: white; font-family: Trebuchet, Arial, sans-serif; font-weight: bold;
-    box-sizing: border-box;
-}
-.onoffswitch-inner:before {
-    content: "ON";
-    padding-left: 10px;
-    background-color: #34A7C1; color: #FFFFFF;
-}
-.onoffswitch-inner:after {
-    content: "OFF";
-    padding-right: 10px;
-    background-color: #EEEEEE; color: #999999;
-    text-align: right;
-}
-.onoffswitch-switch {
-    display: block; width: 18px; margin: 6px;
-    background: #FFFFFF;
-    position: absolute; top: 0; bottom: 0;
-    right: 56px;
-    border: 2px solid #999999; border-radius: 20px;
-    transition: all 0.3s ease-in 0s;
-}
-.onoffswitch-checkbox:checked + .onoffswitch-label .onoffswitch-inner {
-    margin-left: 0;
-}
-.onoffswitch-checkbox:checked + .onoffswitch-label .onoffswitch-switch {
-    right: 0px;
-}
-
+  button:hover{
+    background-color: rgb(190, 171, 205);
+    color: teal;
+  }
+  h1{
+    color: green;
+    font-size: 50px;
+    font-family:'Arvo', serif ;
+  }
  body {
-  background-color: teal;
+   background-image: url("http://3.bp.blogspot.com/_DziNhZUeF0Y/TTL7o3mZnkI/AAAAAAAAAEg/BRkGhKMrr4s/s1600/PivotWithDrops.JPG");
+    background-color: rgb(130, 248, 124);
 }
-#tb {
-  font-size: 20px;
-  font-style: normal;
-  font-family: fantasy;
-}
-  </style>
-  <?PHP
-$conn=mysqli_connect("localhost","root","","project");
-date_default_timezone_set('Asia/Kolkata');
-$x= date('H:i:s');
-$q="select * from irrigation where time<'$x'";
-$r=mysqli_query($conn,$q);
-$c=0;
-while($m=mysqli_fetch_array($r))
-{
-$temp[$c]=$m;
-$c=$c+1;
-}
-for($i=$c-2;$i>=0;$i--)
-{
-  if($temp[$c-1]['status']!=$temp[$i]['status'])
-  {
-    $a=$temp[$i]['time'];
-    break;
-  }
-  else {
-    $a=$temp[0]['time'];
+/*#img {
+  display: block;
+  margin-left: auto;
+  margin-right: auto;
+  width: 40%;
+  border-radius: 20px;
+  border-color: black;
+  border-style: hidden;
+  border-width: 5px;
+  }*/
+  #but {
+    border-radius: 10px;
+    width: 100px;
+    height: 30px;
+    /*margin: 0 auto;*/
+    position: absolute;
+    top: 70%; left: 45%;
 
   }
-}
-?>
-  <br>
-  <br>
-  <table id="tb" align ="center" cellpadding="16%">
-    <tr>
-<td>Moisture Content:</td>
-<td><input type="text" name="mc" value="<?php echo $temp[$c-1]['moisture'] ?>"></td>
-    </tr>
-    <tr>
-      <td>pH value:</td>
-      <td><input type="text" name="ph" value="<?php echo $temp[$c-1]['ph'] ?>"></td>
-    </tr>
-    <tr>
-      <td>State of pump:</td>
-      <td><input type="text" name="state" value="<?php echo $temp[$c-1]['status'] ?>"></td>
-    </tr>
-    <tr>
-      <td>Pump last used:</td>
-      <td><?PHP echo $a; ?></td>
-    </tr>
-    <tr>
-      <td>Pump:</td>
-      <td>
-        <div class="onoffswitch">
-            <input type="checkbox" name="onoffswitch" class="onoffswitch-checkbox" id="myonoffswitch" <?php
-          if ($temp[$c-1]['status']==1) {?> checked <?php } ?>>
-            <label class="onoffswitch-label" for="myonoffswitch">
-                <span class="onoffswitch-inner"></span>
-                <span class="onoffswitch-switch"></span>
-            </label>
-        </div>
-</td>
-</tr>
+/*  body,html{
+    height: 100%;
+    background-image: "irrg.jpg";
+    background-position: center;
+    background-repeat: no-repeat;
+    background-size: cover;
+  }*/
+</style>
+</head>
+<body>
+
+<h1 align="center">IRRIGATION  FOR  TOMORROW</h1>
+<!--<img id="img" src="irrg.jpg" alt="Irrigation">-->
+<br>
+<br>
+<br>
+<table align="center" width=50% cellpadding=20% style="background-color:rgba(237, 249, 102, 0.45);">
+<tr>
+<td style="font-size: 20px;">  Irrigation may be defined as the science of artificial application of water to the land in order to fulfill the water requirements of the crops throughout the crop period for the full nourishment of the crops.
+  Nutrients to the crops may also be applied through irrigation.
+</td></tr>
 </table>
+<form action="status.php">
+<button id="but" type="submit" >Check Status</button>
+</form>
 </body>
 </html>
