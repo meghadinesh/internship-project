@@ -1,9 +1,9 @@
 #include<LiquidCrystal.h>
 LiquidCrystal lcd(13,12,11,10,9,8);
-int levelup= 650;
-int leveldown= 250;
+int levelup= 1021;
+int leveldown= 1019;
 int probe=0;
-int led=1; 
+int led=2; 
 void setup() {
   // initialize serial communication at 9600 bits per second:
   Serial.begin(9600);
@@ -20,16 +20,34 @@ void loop() {
   // read the input on analog pin 0:
   lcd.clear();
   int s= analogRead(probe);
-  if(s<leveldown){
-    lcd.print("Moisture content low");
+  Serial.println(s);
+  int o=Serial.read();
+  if(o==1){
     digitalWrite(led,HIGH);//to supply power to motor
+    //Serial.println(1);
     delay(1000);
   }
-   if(s>levelup){
-    lcd.print("Moisture content high");
-    digitalWrite(led,LOW);//to cut off power from motor
+  else if(o==0){
+   digitalWrite(led,LOW);//to cut off power from motor
+  //Serial.println(0); 
   }
+  else if(s<leveldown){
+    lcd.print("Moisture low:");
+    digitalWrite(led,HIGH);//to supply power to motor
+    Serial.println(1);
+    delay(1000);
+  }
+   else if(s>levelup){
+    lcd.print("Moisture high:");
+    digitalWrite(led,LOW);//to cut off power from motor
+    Serial.println(0);
+  }
+  else{
+     digitalWrite(led,HIGH);//to supply power to motor
+    Serial.println(1);
+    delay(1000);
+    }
   lcd.println(s);
-  Serial.println(s);
   delay(5000);        // delay in between reads for stability
+  lcd.clear();
 }
